@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  sketches Sketch[]
+  games    Game[]
+}
+
+model Word {
+  id   Int    @id @default(autoincrement())
+  text String @unique
+
+  sketches Sketch[]
+}
+
+enum SketchStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Sketch {
+  id          String       @id @default(uuid())
+  author      User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  word        Word         @relation(fields: [wordId], references: [id])
+  wordId      Int
+  status      SketchStatus @default(DRAFT)
+  image       String?
+  startedAt   DateTime     @default(now())
+  publishedAt DateTime?
+
+  games Game[]
+
+  @@index([status, publishedAt])
+  @@index([authorId])
+}
+
+enum GameStatus {
+  IN_PROGRESS
+  WON
+  LOST
+}
+
+model Game {
+  id         String     @id @default(uuid())
+  sketch     Sketch     @relation(fields: [sketchId], references: [id], onDelete: Cascade)
+  sketchId   String
+  player     User       @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId   String
+  status     GameStatus @default(IN_PROGRESS)
+  createdAt  DateTime   @default(now())
+  finishedAt DateTime?
+
+  guesses Guess[]
+
+  @@unique([sketchId, playerId])
+  @@index([playerId])
+}
+
+model Guess {
+  id        String   @id @default(uuid())
+  game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  gameId    String
+  text      String
+  correct   Boolean
+  createdAt DateTime @default(now())
+}
