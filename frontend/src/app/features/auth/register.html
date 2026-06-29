@@ -1,0 +1,44 @@
+<div class="container auth-page">
+  <div class="card auth-card">
+    <h1>Registrati</h1>
+    <p class="subtitle">Crea un account per disegnare e indovinare.</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" type="text" formControlName="username" autocomplete="username" />
+        @if (form.controls.username.touched && form.controls.username.invalid) {
+          <p class="hint">3-20 caratteri: lettere, numeri o underscore.</p>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" autocomplete="new-password" />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <p class="hint">Almeno 8 caratteri.</p>
+        }
+      </div>
+
+      <div class="field">
+        <label for="confirm">Conferma password</label>
+        <input id="confirm" type="password" formControlName="confirm" autocomplete="new-password" />
+        @if (form.controls.confirm.touched && form.hasError('mismatch')) {
+          <p class="hint">Le password non coincidono.</p>
+        }
+      </div>
+
+      @if (error()) {
+        <p class="error-text">{{ error() }}</p>
+      }
+
+      <button class="btn" type="submit" [disabled]="loading()">
+        {{ loading() ? 'Attendere...' : 'Crea account' }}
+      </button>
+    </form>
+
+    <p class="switch">
+      Hai gia un account? <a routerLink="/login">Accedi</a>
+    </p>
+  </div>
+</div>

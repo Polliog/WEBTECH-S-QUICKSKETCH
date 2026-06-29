@@ -1,0 +1,149 @@
+.subtitle {
+  color: var(--text-soft);
+  margin: 0 0 1.6rem;
+}
+
+.muted {
+  color: var(--text-soft);
+}
+
+.words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+}
+
+.word-chip {
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.word-chip:hover {
+  border-color: var(--primary);
+}
+
+.word-chip.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.start-btn {
+  font-size: 1.05rem;
+}
+
+.draw-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+
+.draw-head .word {
+  font-size: 1.4rem;
+  margin-left: 0.4rem;
+}
+
+.timer {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer.urgent {
+  color: var(--danger);
+}
+
+.timer-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+  margin-bottom: 1.2rem;
+}
+
+.timer-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  transition: width 1s linear;
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+}
+
+canvas {
+  width: min(600px, 92vw);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+
+.palette {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+}
+
+.swatch.selected {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.brush {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brush label {
+  margin: 0;
+}
+
+.brush input {
+  width: 130px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+@media (max-width: 620px) {
+  .spacer {
+    display: none;
+  }
+
+  .tools {
+    justify-content: center;
+  }
+}

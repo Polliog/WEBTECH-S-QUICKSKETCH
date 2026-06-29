@@ -1,0 +1,52 @@
+<section class="container">
+  <div class="head">
+    <div>
+      <h1>Galleria</h1>
+      <p class="subtitle">Tutti gli sketch pubblicati dalla community.</p>
+    </div>
+    @if (isAuthenticated()) {
+      <a class="btn" routerLink="/create">Nuovo sketch</a>
+    }
+  </div>
+
+  @if (loading() && items().length === 0) {
+    <p class="muted">Caricamento...</p>
+  } @else if (items().length === 0) {
+    <div class="card empty">
+      <p>Ancora nessuno sketch. Sii il primo a disegnarne uno!</p>
+    </div>
+  } @else {
+    <div class="grid">
+      @for (sketch of items(); track sketch.id) {
+        <a class="card tile" [routerLink]="['/sketch', sketch.id]">
+          <div class="thumb">
+            <img [src]="sketch.image" [alt]="'Sketch di ' + sketch.author.username" />
+            @if (sketch.isAuthor) {
+              <span class="badge badge-mine corner">Tuo</span>
+            } @else if (sketch.myGameStatus === 'WON') {
+              <span class="badge badge-won corner">Indovinato</span>
+            } @else if (sketch.myGameStatus === 'LOST') {
+              <span class="badge badge-lost corner">Perso</span>
+            } @else if (sketch.myGameStatus === 'IN_PROGRESS') {
+              <span class="badge badge-progress corner">In corso</span>
+            }
+          </div>
+          <div class="meta">
+            <span class="author">{{ sketch.author.username }}</span>
+            <span class="date">{{ sketch.publishedAt | date: 'd MMM, HH:mm' }}</span>
+          </div>
+        </a>
+      }
+    </div>
+
+    <div class="pager">
+      <button class="btn btn-ghost" type="button" (click)="prev()" [disabled]="page() <= 1">
+        Precedente
+      </button>
+      <span>Pagina {{ page() }} di {{ totalPages }}</span>
+      <button class="btn btn-ghost" type="button" (click)="next()" [disabled]="page() >= totalPages">
+        Successiva
+      </button>
+    </div>
+  }
+</section>

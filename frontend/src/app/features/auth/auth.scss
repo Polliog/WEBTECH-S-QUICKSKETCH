@@ -1,0 +1,39 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-card {
+  width: min(420px, 100%);
+  padding: 2.2rem;
+}
+
+.auth-card h1 {
+  margin: 0 0 0.3rem;
+}
+
+.subtitle {
+  color: var(--text-soft);
+  margin: 0 0 1.6rem;
+}
+
+.field {
+  margin-bottom: 1.1rem;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.switch {
+  margin-top: 1.4rem;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.hint {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  margin-top: 0.35rem;
+}

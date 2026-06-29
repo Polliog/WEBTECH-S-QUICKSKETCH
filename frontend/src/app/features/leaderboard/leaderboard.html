@@ -1,0 +1,61 @@
+<section class="container">
+  <h1>Classifiche</h1>
+  <p class="subtitle">I migliori disegnatori e i migliori giocatori della community.</p>
+
+  <div class="tabs">
+    <button
+      type="button"
+      [class.active]="tab() === 'drawers'"
+      (click)="tab.set('drawers')"
+    >
+      Migliori disegnatori
+    </button>
+    <button
+      type="button"
+      [class.active]="tab() === 'players'"
+      (click)="tab.set('players')"
+    >
+      Migliori giocatori
+    </button>
+  </div>
+
+  @if (tab() === 'drawers') {
+    <div class="card table">
+      <div class="row header">
+        <span class="rank">#</span>
+        <span>Utente</span>
+        <span class="num">Indovinati</span>
+        <span class="num">Partite</span>
+        <span class="num">Successo</span>
+      </div>
+      @for (row of drawers(); track row.userId; let i = $index) {
+        <div class="row">
+          <span class="rank">{{ i + 1 }}</span>
+          <span class="user">{{ row.username }}</span>
+          <span class="num">{{ row.guessedSketches }}</span>
+          <span class="num">{{ row.finishedGames }}</span>
+          <span class="num strong">{{ row.successRate }}%</span>
+        </div>
+      } @empty {
+        <div class="row empty">Nessun dato disponibile.</div>
+      }
+    </div>
+  } @else {
+    <div class="card table">
+      <div class="row header players">
+        <span class="rank">#</span>
+        <span>Utente</span>
+        <span class="num">Parole indovinate</span>
+      </div>
+      @for (row of players(); track row.userId; let i = $index) {
+        <div class="row players">
+          <span class="rank">{{ i + 1 }}</span>
+          <span class="user">{{ row.username }}</span>
+          <span class="num strong">{{ row.wordsGuessed }}</span>
+        </div>
+      } @empty {
+        <div class="row empty">Nessun dato disponibile.</div>
+      }
+    </div>
+  }
+</section>

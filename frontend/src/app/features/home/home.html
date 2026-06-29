@@ -1,0 +1,29 @@
+<section class="hero container">
+  <div class="hero-text">
+    <span class="pill">Disegna. Indovina. Scala la classifica.</span>
+    <h1>Un disegno, una parola,<br />60 secondi di tempo.</h1>
+    <p>
+      QuickSketch e una piattaforma ispirata a Pictionary: scegli una parola,
+      rappresentala su una canvas a tempo e lascia che gli altri provino a
+      indovinarla. Ogni partita conta per le classifiche e le tue statistiche.
+    </p>
+
+    <div class="actions">
+      <a class="btn" routerLink="/gallery">Esplora la galleria</a>
+      @if (!isAuthenticated()) {
+        <a class="btn btn-ghost" routerLink="/register">Inizia a giocare</a>
+      } @else {
+        <a class="btn btn-ghost" routerLink="/create">Crea uno sketch</a>
+      }
+    </div>
+  </div>
+
+  <div class="hero-card card">
+    <ol class="steps">
+      <li><strong>1.</strong> Scegli una parola dal set predefinito.</li>
+      <li><strong>2.</strong> Disegnala prima dello scadere del timer.</li>
+      <li><strong>3.</strong> Gli altri hanno 10 tentativi per indovinare.</li>
+      <li><strong>4.</strong> Vittorie e percentuali finiscono in classifica.</li>
+    </ol>
+  </div>
+</section>

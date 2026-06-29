@@ -1,0 +1,91 @@
+<section class="container">
+  @if (phase() === 'choosing') {
+    <h1>Crea uno sketch</h1>
+    <p class="subtitle">Scegli una parola: avrai {{ timeLimit() }} secondi per disegnarla.</p>
+
+    @if (error()) {
+      <p class="error-text">{{ error() }}</p>
+    }
+
+    <div class="words">
+      @for (word of words(); track word.id) {
+        <button
+          type="button"
+          class="word-chip"
+          [class.selected]="selectedWordId() === word.id"
+          (click)="selectedWordId.set(word.id)"
+        >
+          {{ word.text }}
+        </button>
+      }
+    </div>
+
+    <button class="btn start-btn" type="button" [disabled]="!selectedWordId()" (click)="start()">
+      Inizia a disegnare
+    </button>
+  } @else {
+    <div class="draw-head">
+      <div>
+        <span class="muted">Disegna:</span>
+        <strong class="word">{{ currentWord() }}</strong>
+      </div>
+      <div class="timer" [class.urgent]="remaining() <= 10">
+        {{ remaining() }}s
+      </div>
+    </div>
+
+    <div class="timer-bar">
+      <span [style.width.%]="(remaining() / timeLimit()) * 100"></span>
+    </div>
+
+    <div class="stage">
+      <canvas
+        #canvas
+        width="600"
+        height="600"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp()"
+        (pointerleave)="onPointerUp()"
+      ></canvas>
+    </div>
+
+    <div class="tools">
+      <div class="palette">
+        @for (c of colors; track c) {
+          <button
+            type="button"
+            class="swatch"
+            [class.selected]="color() === c"
+            [style.background]="c"
+            (click)="color.set(c)"
+            [attr.aria-label]="'Colore ' + c"
+          ></button>
+        }
+      </div>
+
+      <div class="brush">
+        <label for="brush">Spessore</label>
+        <input
+          id="brush"
+          type="range"
+          min="2"
+          max="28"
+          [value]="brush()"
+          (input)="brush.set(+$any($event.target).value)"
+        />
+      </div>
+
+      <div class="spacer"></div>
+
+      <button class="btn btn-ghost" type="button" (click)="clear()">Pulisci</button>
+      <button class="btn" type="button" [disabled]="phase() === 'publishing'" (click)="publish()">
+        {{ phase() === 'publishing' ? 'Pubblico...' : 'Pubblica' }}
+      </button>
+    </div>
+
+    @if (error()) {
+      <p class="error-text">{{ error() }}</p>
+    }
+  }
+</section>

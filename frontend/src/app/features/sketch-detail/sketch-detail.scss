@@ -1,0 +1,124 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.canvas-wrap {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.canvas-wrap img {
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.author-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.author-row h1 {
+  margin: 0;
+}
+
+.muted {
+  color: var(--text-soft);
+}
+
+.small {
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.box {
+  padding: 1.3rem;
+  margin-top: 1.2rem;
+}
+
+.box p {
+  margin: 0.7rem 0 0;
+}
+
+.result.won {
+  border-color: rgba(6, 214, 160, 0.5);
+}
+
+.result.lost {
+  border-color: rgba(239, 71, 111, 0.5);
+}
+
+.attempts-left {
+  margin: 0 0 0.9rem !important;
+}
+
+.guess-form {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.guess-form input {
+  flex: 1;
+}
+
+.history {
+  margin-top: 1.4rem;
+}
+
+.history h3 {
+  margin: 0 0 0.6rem;
+}
+
+.history ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.history li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  background: var(--surface-muted);
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.history li.ok {
+  background: rgba(6, 214, 160, 0.14);
+  color: #04996f;
+  font-weight: 600;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 1.6rem;
+  color: var(--text-soft);
+}
+
+.empty {
+  padding: 2.5rem;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.empty .btn {
+  margin-top: 1rem;
+}
+
+@media (max-width: 820px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

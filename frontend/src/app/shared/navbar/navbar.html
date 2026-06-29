@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <a class="brand" routerLink="/" (click)="close()">
+    <span class="brand-mark">QS</span>
+    QuickSketch
+  </a>
+
+  <button class="burger" type="button" (click)="toggle()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="links" [class.open]="menuOpen()">
+    <a routerLink="/gallery" routerLinkActive="active" (click)="close()">Galleria</a>
+    <a routerLink="/leaderboard" routerLinkActive="active" (click)="close()">Classifiche</a>
+
+    @if (user(); as current) {
+      <a routerLink="/create" routerLinkActive="active" (click)="close()">Crea</a>
+      <a routerLink="/stats" routerLinkActive="active" (click)="close()">Statistiche</a>
+      <span class="me">{{ current.username }}</span>
+      <button class="link-btn" type="button" (click)="logout()">Esci</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active" (click)="close()">Accedi</a>
+      <a class="cta" routerLink="/register" (click)="close()">Registrati</a>
+    }
+  </div>
+</nav>

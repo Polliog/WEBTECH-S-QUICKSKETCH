@@ -1,0 +1,30 @@
+<div class="container auth-page">
+  <div class="card auth-card">
+    <h1>Accedi</h1>
+    <p class="subtitle">Bentornato su QuickSketch.</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" type="text" formControlName="username" autocomplete="username" />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" autocomplete="current-password" />
+      </div>
+
+      @if (error()) {
+        <p class="error-text">{{ error() }}</p>
+      }
+
+      <button class="btn" type="submit" [disabled]="loading()">
+        {{ loading() ? 'Attendere...' : 'Accedi' }}
+      </button>
+    </form>
+
+    <p class="switch">
+      Non hai un account? <a routerLink="/register">Registrati</a>
+    </p>
+  </div>
+</div>

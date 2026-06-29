@@ -1,0 +1,47 @@
+<section class="container">
+  <h1>Le tue statistiche</h1>
+  @if (user(); as u) {
+    <p class="subtitle">Riepilogo dell attivita di <strong>{{ u.username }}</strong>.</p>
+  }
+
+  @if (stats(); as s) {
+    <div class="grid">
+      <div class="card stat">
+        <span class="value">{{ s.drawingsProduced }}</span>
+        <span class="label">Disegni prodotti</span>
+      </div>
+      <div class="card stat">
+        <span class="value">{{ s.wordsGuessed }}</span>
+        <span class="label">Parole indovinate</span>
+      </div>
+      <div class="card stat">
+        <span class="value">{{ s.wordsMissed }}</span>
+        <span class="label">Parole non indovinate</span>
+      </div>
+      <div class="card stat">
+        <span class="value">{{ s.attemptsUsed }}</span>
+        <span class="label">Tentativi totali usati</span>
+      </div>
+      <div class="card stat">
+        <span class="value">{{ s.gamesInProgress }}</span>
+        <span class="label">Partite in corso</span>
+      </div>
+      <div class="card stat">
+        <span class="value">
+          {{ s.drawer.successRate === null ? '-' : s.drawer.successRate + '%' }}
+        </span>
+        <span class="label">Successo dei tuoi disegni</span>
+      </div>
+    </div>
+
+    <div class="card detail">
+      <h3>Come disegnatore</h3>
+      <p>
+        I tuoi sketch hanno generato <strong>{{ s.drawer.finishedGamesOnMySketches }}</strong>
+        partite concluse, di cui <strong>{{ s.drawer.guessedSketches }}</strong> indovinate dagli altri.
+      </p>
+    </div>
+  } @else {
+    <p class="muted">Caricamento...</p>
+  }
+</section>

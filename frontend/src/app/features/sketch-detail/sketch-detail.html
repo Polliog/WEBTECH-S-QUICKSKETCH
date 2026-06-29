@@ -1,0 +1,87 @@
+<section class="container">
+  @if (notFound()) {
+    <div class="card empty">
+      <p>Sketch non trovato.</p>
+      <a class="btn btn-ghost" routerLink="/gallery">Torna alla galleria</a>
+    </div>
+  } @else if (sketch(); as s) {
+    <div class="layout">
+      <div class="card canvas-wrap">
+        <img [src]="s.image" [alt]="'Sketch di ' + s.author.username" />
+      </div>
+
+      <div class="panel">
+        <div class="author-row">
+          <h1>Sketch</h1>
+          <span class="muted">di <strong>{{ s.author.username }}</strong></span>
+        </div>
+        <p class="muted small">Pubblicato il {{ s.publishedAt | date: 'd MMMM y, HH:mm' }}</p>
+
+        @if (s.isAuthor) {
+          <div class="card box">
+            <span class="badge badge-mine">Il tuo sketch</span>
+            <p>La parola che hai disegnato e <strong>{{ solution() }}</strong>.</p>
+          </div>
+        } @else if (!isAuthenticated()) {
+          <div class="card box">
+            <p>Accedi per provare a indovinare questo sketch.</p>
+            <a class="btn" routerLink="/login" [queryParams]="{ redirect: '/sketch/' + s.id }">Accedi</a>
+          </div>
+        } @else {
+          @if (status() === 'WON') {
+            <div class="card box result won">
+              <span class="badge badge-won">Indovinato!</span>
+              <p>La parola era <strong>{{ solution() }}</strong>. Complimenti!</p>
+            </div>
+          } @else if (status() === 'LOST') {
+            <div class="card box result lost">
+              <span class="badge badge-lost">Tentativi esauriti</span>
+              <p>La soluzione era <strong>{{ solution() }}</strong>.</p>
+            </div>
+          } @else {
+            <div class="card box">
+              <p class="attempts-left">
+                Tentativi rimasti: <strong>{{ attemptsLeft() }}</strong> / {{ maxGuesses() }}
+              </p>
+              <form class="guess-form" (ngSubmit)="submitGuess()">
+                <input
+                  type="text"
+                  name="guess"
+                  placeholder="La tua risposta..."
+                  [ngModel]="guess()"
+                  (ngModelChange)="guess.set($event)"
+                  [disabled]="sending()"
+                  autocomplete="off"
+                />
+                <button class="btn" type="submit" [disabled]="sending() || !guess().trim()">
+                  Indovina
+                </button>
+              </form>
+              @if (error()) {
+                <p class="error-text">{{ error() }}</p>
+              }
+            </div>
+          }
+
+          @if (attempts().length > 0) {
+            <div class="history">
+              <h3>I tuoi tentativi</h3>
+              <ul>
+                @for (a of attempts(); track $index) {
+                  <li [class.ok]="a.correct">
+                    <span>{{ a.text }}</span>
+                    <span>{{ a.correct ? 'corretto' : 'errato' }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        }
+
+        <a class="back" routerLink="/gallery">&larr; Tutti gli sketch</a>
+      </div>
+    </div>
+  } @else {
+    <p class="muted">Caricamento...</p>
+  }
+</section>
