@@ -7,8 +7,6 @@ services:
       POSTGRES_USER: quicksketch
       POSTGRES_PASSWORD: quicksketch
       POSTGRES_DB: quicksketch
-    ports:
-      - "5432:5432"
     volumes:
       - quicksketch-data:/var/lib/postgresql/data
     healthcheck:
