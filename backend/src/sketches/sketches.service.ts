@@ -52,6 +52,8 @@ export class SketchesService {
       throw new BadRequestException('Sketch already published');
     }
 
+    // Il tempo è validato qui, lato server: `startedAt` è fissato all'avvio,
+    // così manomettere il timer nel front-end non serve. `grace` tollera la latenza.
     const limit = this.config.get<number>('game.drawTimeLimitSeconds') ?? 60;
     const grace = this.config.get<number>('game.drawTimeGraceSeconds') ?? 5;
     const elapsedSeconds = (Date.now() - sketch.startedAt.getTime()) / 1000;
@@ -147,6 +149,8 @@ export class SketchesService {
 
     const finished =
       myGame?.status === GameStatus.WON || myGame?.status === GameStatus.LOST;
+    // La parola non deve mai raggiungere il client durante il gioco: si svela
+    // solo all'autore o a chi ha già concluso la partita (vinta o persa).
     const reveal = isAuthor || finished;
 
     return {

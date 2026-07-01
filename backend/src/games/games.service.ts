@@ -8,6 +8,8 @@ import { ConfigService } from '@nestjs/config';
 import { GameStatus, SketchStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
+// Confronto tollerante: ignora accenti, maiuscole e spazi extra, così "Città "
+// e "citta" risultano equivalenti.
 function normalize(value: string): string {
   return value
     .normalize('NFD')
@@ -87,6 +89,7 @@ export class GamesService {
         where: { gameId: game!.id },
       });
 
+      // Vince appena indovina; perde solo dopo aver esaurito i 10 tentativi.
       let status: GameStatus = GameStatus.IN_PROGRESS;
       if (correct) {
         status = GameStatus.WON;
