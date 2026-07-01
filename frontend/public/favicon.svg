@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Brand mark QuickSketch: quadrato ocra "timbrato" con QS, come nella navbar -->
+  <g transform="rotate(-4 16 16)">
+    <!-- Ombra netta sfalsata -->
+    <path transform="translate(2 2)" fill="#23262e"
+      d="M13 6 L22 6 Q26 6 26 10 L26 18.5 Q26 26 18.5 26 L9.5 26 Q6 26 6 22.5 L6 13 Q6 6 13 6 Z"/>
+    <!-- Riquadro ocra con bordo d'inchiostro -->
+    <path fill="#d79a2b" stroke="#23262e" stroke-width="2"
+      d="M13 6 L22 6 Q26 6 26 10 L26 18.5 Q26 26 18.5 26 L9.5 26 Q6 26 6 22.5 L6 13 Q6 6 13 6 Z"/>
+    <text x="16" y="16.8" fill="#23262e" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Shantell Sans', 'Comic Sans MS', system-ui, sans-serif"
+      font-size="11" font-weight="700">QS</text>
+  </g>
+</svg>
