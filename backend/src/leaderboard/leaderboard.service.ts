@@ -22,14 +22,6 @@ interface PlayerRow {
 export class LeaderboardService {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Classifica dei migliori disegnatori. Per ogni autore conta, sui suoi sketch
-   * pubblicati, le partite concluse dagli altri (WON+LOST) e quelle vinte (WON),
-   * e ordina per percentuale di successo (vinte/concluse). Sono inclusi solo gli
-   * autori con almeno una partita conclusa; a parita' di percentuale vince chi ha
-   * piu' sketch indovinati, poi l'ordine alfabetico.
-   * @returns i primi 20 disegnatori con indovinati, partite concluse e % successo.
-   */
   async drawers() {
     const rows = await this.prisma.$queryRaw<DrawerRow[]>(Prisma.sql`
       SELECT u.id,
@@ -63,12 +55,6 @@ export class LeaderboardService {
     });
   }
 
-  /**
-   * Classifica dei migliori giocatori, per numero di parole indovinate: conta le
-   * partite vinte (WON) di ciascun utente, ordinando dal maggior numero di vittorie
-   * e, a parita', per ordine alfabetico.
-   * @returns i primi 20 giocatori con il numero di parole indovinate.
-   */
   async players() {
     const rows = await this.prisma.$queryRaw<PlayerRow[]>(Prisma.sql`
       SELECT u.id, u.username, COUNT(g.*) AS wins

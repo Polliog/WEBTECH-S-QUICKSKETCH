@@ -8,13 +8,6 @@ import { ConfigService } from '@nestjs/config';
 import { GameStatus, SketchStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
-/**
- * Normalizza un testo per confrontare tentativo e parola in modo tollerante:
- * rimuove gli accenti, porta in minuscolo, taglia gli spazi ai bordi e riduce
- * gli spazi multipli. Cosi "Città " e "citta" risultano equivalenti.
- * @param value testo da normalizzare.
- * @returns testo normalizzato per il confronto.
- */
 function normalize(value: string): string {
   return value
     .normalize('NFD')
@@ -35,13 +28,6 @@ export class GamesService {
     return this.config.get<number>('game.maxGuesses') ?? 10;
   }
 
-  /**
-   * Stato corrente della partita dell'utente su uno sketch: tentativi usati e
-   * rimasti, esito e cronologia. La parola viene inclusa solo a partita conclusa.
-   * @param userId id del giocatore.
-   * @param sketchId id dello sketch giocato.
-   * @returns stato della partita (o stato "non iniziata" se non ha ancora giocato).
-   */
   async getState(userId: string, sketchId: string) {
     const sketch = await this.loadPlayableSketch(userId, sketchId);
 
@@ -73,21 +59,9 @@ export class GamesService {
     };
   }
 
-  /**
-   * Registra un tentativo di indovinare e aggiorna lo stato della partita.
-   * La partita si crea al primo tentativo; si vince appena il testo coincide con
-   * la parola, si perde al raggiungimento del numero massimo di tentativi (10);
-   * una volta conclusa non si puo' piu' giocare quello sketch.
-   * @param userId id del giocatore.
-   * @param sketchId id dello sketch giocato.
-   * @param attempt testo del tentativo.
-   * @returns esito del tentativo, stato partita, tentativi rimasti e (a fine
-   *          partita) la parola corretta.
-   */
   async guess(userId: string, sketchId: string, attempt: string) {
     const sketch = await this.loadPlayableSketch(userId, sketchId);
 
-    // La partita nasce al primo tentativo: se non esiste, la creiamo ora.
     let game = await this.prisma.game.findUnique({
       where: { sketchId_playerId: { sketchId, playerId: userId } },
     });
@@ -98,16 +72,12 @@ export class GamesService {
       });
     }
 
-    // Partita gia' vinta o persa: niente altri tentativi.
     if (game.status !== GameStatus.IN_PROGRESS) {
       throw new BadRequestException('This sketch is already closed for you');
     }
 
-    // Confronto tollerante (accenti, maiuscole, spazi) tra tentativo e parola.
     const correct = normalize(attempt) === normalize(sketch.word.text);
 
-    // Salvataggio del tentativo e calcolo del nuovo stato in un'unica
-    // transazione, cosi il conteggio dei tentativi resta coerente.
     const updated = await this.prisma.$transaction(async (tx) => {
       await tx.guess.create({
         data: { gameId: game!.id, text: attempt, correct },
@@ -117,7 +87,6 @@ export class GamesService {
         where: { gameId: game!.id },
       });
 
-      // Vittoria se ha indovinato; sconfitta se ha esaurito i 10 tentativi.
       let status: GameStatus = GameStatus.IN_PROGRESS;
       if (correct) {
         status = GameStatus.WON;
@@ -148,13 +117,6 @@ export class GamesService {
     };
   }
 
-  /**
-   * Carica uno sketch verificando che sia giocabile dall'utente: deve esistere,
-   * essere pubblicato e non essere il proprio (non si indovina il proprio sketch).
-   * @param userId id del giocatore.
-   * @param sketchId id dello sketch.
-   * @returns lo sketch con la parola associata (per il confronto lato server).
-   */
   private async loadPlayableSketch(userId: string, sketchId: string) {
     const sketch = await this.prisma.sketch.findUnique({
       where: { id: sketchId },
@@ -175,12 +137,6 @@ export class GamesService {
     return sketch;
   }
 
-  /**
-   * Stato restituito quando l'utente non ha ancora tentato lo sketch:
-   * tutti i tentativi disponibili e nessuna cronologia.
-   * @param sketchId id dello sketch.
-   * @returns stato "non iniziata".
-   */
   private emptyState(sketchId: string) {
     return {
       sketchId,
