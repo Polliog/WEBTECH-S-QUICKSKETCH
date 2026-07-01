@@ -16,6 +16,12 @@ export class AuthService {
     private readonly jwt: JwtService,
   ) {}
 
+  /**
+   * Registra un nuovo utente: rifiuta username gia' esistenti, salva solo l'hash
+   * Argon2 della password (mai la password in chiaro) e apre subito la sessione.
+   * @param dto username e password scelti.
+   * @returns token JWT e dati pubblici dell'utente.
+   */
   async register(dto: RegisterDto) {
     const existing = await this.prisma.user.findUnique({
       where: { username: dto.username },
@@ -33,6 +39,13 @@ export class AuthService {
     return this.buildSession(user.id, user.username);
   }
 
+  /**
+   * Autentica un utente verificando la password contro l'hash salvato. Per non
+   * rivelare quali username esistano, l'errore e' identico sia se l'utente non
+   * esiste sia se la password e' sbagliata.
+   * @param dto username e password inseriti.
+   * @returns token JWT e dati pubblici dell'utente.
+   */
   async login(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: { username: dto.username },
@@ -49,6 +62,12 @@ export class AuthService {
     return this.buildSession(user.id, user.username);
   }
 
+  /**
+   * Crea la sessione firmando un token JWT con id e username dell'utente.
+   * @param id id dell'utente.
+   * @param username username dell'utente.
+   * @returns token d'accesso e dati pubblici dell'utente.
+   */
   private async buildSession(id: string, username: string) {
     const accessToken = await this.jwt.signAsync({ sub: id, username });
     return {

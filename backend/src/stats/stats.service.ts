@@ -6,6 +6,15 @@ import { PrismaService } from '../prisma/prisma.service';
 export class StatsService {
   constructor(private readonly prisma: PrismaService) {}
 
+  /**
+   * Statistiche personali dell'utente, calcolate in un'unica transazione:
+   * disegni pubblicati, parole indovinate (partite vinte) e non indovinate
+   * (perse), partite in corso, tentativi totali usati e, come disegnatore, quante
+   * partite gli altri hanno concluso/vinto sui suoi sketch con la relativa % di
+   * successo.
+   * @param userId id dell'utente.
+   * @returns riepilogo numerico delle statistiche personali.
+   */
   async forUser(userId: string) {
     const [
       drawingsProduced,
@@ -42,6 +51,8 @@ export class StatsService {
       }),
     ]);
 
+    // Percentuale di successo come disegnatore: null se nessuno ha ancora
+    // concluso una partita sui suoi sketch (evita la divisione per zero).
     const drawerSuccessRate =
       othersFinishedOnMySketches > 0
         ? Math.round((othersWonOnMySketches / othersFinishedOnMySketches) * 100)
