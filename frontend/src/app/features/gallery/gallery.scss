@@ -3,7 +3,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.8rem;
 }
 
 .head h1 {
@@ -11,79 +11,90 @@
 }
 
 .subtitle {
-  color: var(--text-soft);
+  color: var(--ink-soft);
   margin: 0;
 }
 
 .muted {
-  color: var(--text-soft);
+  color: var(--ink-soft);
 }
 
 .empty {
-  padding: 2.5rem;
+  padding: 2.6rem;
   text-align: center;
-  color: var(--text-soft);
+  color: var(--ink-soft);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.3rem;
+  gap: 1.6rem;
 }
 
+/* Ogni sketch e un foglio appuntato al taccuino */
 .tile {
-  overflow: hidden;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  overflow: visible;
+  padding: 0.55rem 0.55rem 0;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, rotate 0.14s ease;
 }
 
 .tile:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(20, 22, 50, 0.16);
+  transform: translateY(-4px);
+  rotate: -1deg;
+  box-shadow: 7px 7px 0 var(--ink);
+  text-decoration: none;
 }
 
 .thumb {
   position: relative;
   aspect-ratio: 1 / 1;
   background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
 }
 
 .thumb img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  image-rendering: auto;
 }
 
 .corner {
   position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
+  top: -0.6rem;
+  right: -0.5rem;
 }
 
 .meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 1rem;
-  border-top: 1px solid var(--border);
+  padding: 0.7rem 0.4rem 0.8rem;
 }
 
 .author {
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
 }
 
 .date {
-  color: var(--text-soft);
-  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
 }
 
 .pager {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.2rem;
-  margin-top: 2rem;
-  color: var(--text-soft);
+  gap: 1.4rem;
+  margin-top: 2.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
 }
 
 @media (max-width: 520px) {

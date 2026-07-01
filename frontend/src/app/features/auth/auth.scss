@@ -1,11 +1,13 @@
 .auth-page {
   display: flex;
   justify-content: center;
+  padding-top: 1rem;
 }
 
 .auth-card {
   width: min(420px, 100%);
   padding: 2.2rem;
+  transform: rotate(-0.6deg);
 }
 
 .auth-card h1 {
@@ -13,27 +15,28 @@
 }
 
 .subtitle {
-  color: var(--text-soft);
+  color: var(--ink-soft);
   margin: 0 0 1.6rem;
 }
 
 .field {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.2rem;
 }
 
 .btn {
   width: 100%;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
 }
 
 .switch {
-  margin-top: 1.4rem;
+  margin-top: 1.5rem;
   text-align: center;
-  color: var(--text-soft);
+  color: var(--ink-soft);
 }
 
 .hint {
-  font-size: 0.82rem;
-  color: var(--text-soft);
-  margin-top: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 0.4rem;
 }

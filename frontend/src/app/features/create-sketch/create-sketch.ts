@@ -14,7 +14,7 @@ import { Word } from '../../core/models';
 
 type Phase = 'choosing' | 'drawing' | 'publishing';
 
-const COLORS = ['#1d2033', '#ef476f', '#06d6a0', '#118ab2', '#ffb703', '#ffffff'];
+const COLORS = ['#23262e', '#cb3f27', '#294c87', '#3b7a50', '#d79a2b', '#ffffff'];
 
 @Component({
   selector: 'app-create-sketch',

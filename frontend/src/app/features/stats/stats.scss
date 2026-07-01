@@ -1,49 +1,65 @@
 .subtitle {
-  color: var(--text-soft);
+  color: var(--ink-soft);
   margin: 0 0 1.8rem;
 }
 
+.subtitle strong {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
 .muted {
-  color: var(--text-soft);
+  color: var(--ink-soft);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 1.2rem;
+  gap: 1.4rem;
 }
 
 .stat {
-  padding: 1.6rem;
+  padding: 1.5rem 1.5rem 1.4rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 
 .value {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--blue);
   font-variant-numeric: tabular-nums;
 }
 
 .label {
-  color: var(--text-soft);
-  font-weight: 600;
-  font-size: 0.92rem;
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+  font-weight: 500;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .detail {
   padding: 1.6rem;
-  margin-top: 1.4rem;
+  margin-top: 1.6rem;
 }
 
 .detail h3 {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.7rem;
 }
 
 .detail p {
   margin: 0;
-  color: var(--text-soft);
-  line-height: 1.6;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.detail strong {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-size: 1.05em;
 }

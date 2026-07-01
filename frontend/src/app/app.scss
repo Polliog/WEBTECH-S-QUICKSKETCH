@@ -2,7 +2,41 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(242, 236, 220, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--ink);
+}
+
+/* Barra di caricamento tra le pagine: un tratto di penna che scorre in alto,
+   con la punta rossa in testa. */
+.route-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background: var(--blue);
+  border-radius: 0 3px 3px 0;
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.24s ease-out, opacity 0.4s ease 0.15s;
+}
+
+.route-bar.on {
+  opacity: 1;
+  transition: width 0.24s ease-out, opacity 0.15s ease;
+}
+
+/* La punta della penna */
+.route-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -1px;
+  height: 6px;
+  width: 16px;
+  background: var(--red);
+  border-radius: 2px 4px 4px 2px;
+  box-shadow: 0 0 6px rgba(203, 63, 39, 0.5);
 }
