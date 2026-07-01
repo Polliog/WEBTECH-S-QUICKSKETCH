@@ -24,8 +24,10 @@ in massimo 10 tentativi. La piattaforma gestisce classifiche e statistiche perso
 .
 ├── backend/          API NestJS, Prisma, autenticazione, logica di gioco
 ├── frontend/         Single Page Application Angular
-├── e2e/              Test End-to-End Playwright
-├── docker-compose.yml  Database PostgreSQL
+├── e2e/                    Test End-to-End Playwright
+├── docker-compose.yml      Stack completo (DB + back-end + front-end)
+├── docker-compose.dev.yml  Solo database PostgreSQL, per lo sviluppo
+├── package.json            Script per avviare i servizi in sviluppo
 └── README.md
 ```
 
@@ -55,48 +57,70 @@ Variabili principali:
 | `MAX_GUESSES` | Tentativi massimi per sketch | `10` |
 | `MAX_IMAGE_BYTES` | Dimensione massima del disegno | `1500000` |
 
-## Avvio passo-passo
+## Avvio
 
-### 1. Database
+Ci sono due modi: uno completo via Docker (utile per la demo) e uno per lo sviluppo.
 
-Dalla cartella radice del progetto:
+### Modo A: tutto con Docker
 
-```bash
-docker compose up -d
-```
-
-Avvia un container PostgreSQL sulla porta 5432.
-
-### 2. Back-end
+Costruisce e avvia database, back-end e front-end con un solo comando. Dalla radice del progetto:
 
 ```bash
-cd backend
-npm install
-npm run prisma:migrate     # applica le migrazioni (al primo avvio)
-npm run prisma:seed        # popola parole, utenti, sketch e partite di esempio
-npm run start:dev          # avvia l'API su http://localhost:3000
+docker compose up --build
 ```
 
-### 3. Front-end
+- Front-end: `http://localhost:4200`
+- API: `http://localhost:3000/api`
 
-In un nuovo terminale:
+Al primo avvio le migrazioni vengono applicate automaticamente. Per caricare i dati di esempio
+(utenti, parole, sketch e partite) basta lanciare il seed una volta a container attivi:
 
 ```bash
-cd frontend
-npm install
-npm start                  # avvia la SPA su http://localhost:4200
+docker compose exec backend npm run prisma:seed
 ```
 
-Aprire il browser su `http://localhost:4200`.
+Per fermare tutto: `docker compose down` (aggiungere `-v` per azzerare anche il database).
+
+### Modo B: sviluppo
+
+In sviluppo il database gira in Docker, mentre back-end e front-end girano in locale con
+ricompilazione automatica. Dalla radice del progetto, al primo avvio:
+
+```bash
+npm install                # installa concurrently (task runner)
+npm run setup              # installa le dipendenze, avvia il DB, migra e popola i dati
+```
+
+Poi, per avviare back-end e front-end insieme:
+
+```bash
+npm run dev
+```
+
+- Front-end: `http://localhost:4200` (avvia con ricompilazione automatica)
+- API: `http://localhost:3000/api`
+
+Script disponibili dalla radice:
+
+| Comando | Descrizione |
+|---------|-------------|
+| `npm run dev` | Avvia back-end e front-end insieme |
+| `npm run db:up` / `npm run db:down` | Avvia/ferma il database (`docker-compose.dev.yml`) |
+| `npm run seed` | Ripopola i dati di esempio |
+| `npm run db:reset` | Ricrea lo schema e ripopola i dati |
+| `npm run setup` | Setup completo iniziale |
+
+In alternativa i due servizi possono essere avviati manualmente in due terminali con
+`npm --prefix backend run start:dev` e `npm --prefix frontend start`.
 
 ## Account demo
 
 Il seed crea quattro utenti, tutti con password `password123`:
 
-- `alice`
-- `bob`
-- `carol`
-- `dave`
+- `giuseppe`
+- `mario`
+- `antonio`
+- `alessandro`
 
 Sono già presenti sketch pubblicati e partite concluse, così classifiche e statistiche
 sono popolate fin da subito.

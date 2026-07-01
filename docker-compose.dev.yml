@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: quicksketch-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: quicksketch
+      POSTGRES_PASSWORD: quicksketch
+      POSTGRES_DB: quicksketch
+    ports:
+      - "5432:5432"
+    volumes:
+      - quicksketch-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quicksketch -d quicksketch"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  quicksketch-data:

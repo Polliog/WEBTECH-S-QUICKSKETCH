@@ -99,7 +99,7 @@ async function main() {
   const wordByText = new Map(words.map((w) => [w.text, w]));
 
   const passwordHash = await argon2.hash('password123');
-  const usernames = ['alice', 'bob', 'carol', 'dave'];
+  const usernames = ['giuseppe', 'mario', 'antonio', 'alessandro'];
   const users: Record<string, { id: string }> = {};
   for (const username of usernames) {
     users[username] = await prisma.user.create({
@@ -109,15 +109,15 @@ async function main() {
   }
 
   const plan: { author: string; word: string }[] = [
-    { author: 'alice', word: 'gatto' },
-    { author: 'alice', word: 'sole' },
-    { author: 'alice', word: 'albero' },
-    { author: 'alice', word: 'pizza' },
-    { author: 'bob', word: 'cane' },
-    { author: 'bob', word: 'mare' },
-    { author: 'bob', word: 'macchina' },
-    { author: 'carol', word: 'fiore' },
-    { author: 'carol', word: 'luna' },
+    { author: 'giuseppe', word: 'gatto' },
+    { author: 'giuseppe', word: 'sole' },
+    { author: 'giuseppe', word: 'albero' },
+    { author: 'giuseppe', word: 'pizza' },
+    { author: 'mario', word: 'cane' },
+    { author: 'mario', word: 'mare' },
+    { author: 'mario', word: 'macchina' },
+    { author: 'antonio', word: 'fiore' },
+    { author: 'antonio', word: 'luna' },
   ];
 
   const sketches: { id: string; word: string; author: string }[] = [];
@@ -169,18 +169,18 @@ async function main() {
     }
   }
 
-  await play('bob', sketches[0], 'WON', 1);
-  await play('carol', sketches[0], 'WON', 0);
-  await play('dave', sketches[0], 'LOST', 0);
-  await play('bob', sketches[1], 'WON', 2);
-  await play('carol', sketches[1], 'LOST', 0);
-  await play('dave', sketches[2], 'WON', 0);
-  await play('carol', sketches[3], 'WON', 3);
-  await play('alice', sketches[4], 'WON', 1);
-  await play('carol', sketches[4], 'LOST', 0);
-  await play('alice', sketches[5], 'WON', 0);
-  await play('dave', sketches[7], 'WON', 2);
-  await play('alice', sketches[8], 'LOST', 0);
+  await play('mario', sketches[0], 'WON', 1);
+  await play('antonio', sketches[0], 'WON', 0);
+  await play('alessandro', sketches[0], 'LOST', 0);
+  await play('mario', sketches[1], 'WON', 2);
+  await play('antonio', sketches[1], 'LOST', 0);
+  await play('alessandro', sketches[2], 'WON', 0);
+  await play('antonio', sketches[3], 'WON', 3);
+  await play('giuseppe', sketches[4], 'WON', 1);
+  await play('antonio', sketches[4], 'LOST', 0);
+  await play('giuseppe', sketches[5], 'WON', 0);
+  await play('alessandro', sketches[7], 'WON', 2);
+  await play('giuseppe', sketches[8], 'LOST', 0);
 
   console.log('Seed completed:', {
     users: usernames.length,
