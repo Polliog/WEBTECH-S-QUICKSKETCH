@@ -5,6 +5,8 @@ Gli utenti registrati scelgono una parola da un insieme predefinito, la disegnan
 entro un tempo limitato e pubblicano lo sketch. Gli altri utenti provano a indovinare la parola
 in massimo 10 tentativi. La piattaforma gestisce classifiche e statistiche personali.
 
+**Autore:** Giuseppe Pollio — matricola N86004953
+
 ## Stack tecnologico
 
 | Livello    | Tecnologia |
