@@ -97,12 +97,26 @@
 
 @media (max-width: 600px) {
   .row {
-    grid-template-columns: 38px 1fr 70px 56px 66px;
-    padding: 0.75rem 0.8rem;
-    font-size: 0.9rem;
+    grid-template-columns: 34px 1fr 60px 48px 58px;
+    padding: 0.7rem 0.65rem;
+    font-size: 0.86rem;
   }
 
   .row.players {
-    grid-template-columns: 38px 1fr 110px;
+    grid-template-columns: 40px 1fr 110px;
+  }
+
+  /* Le intestazioni lunghe devono stare nelle colonne strette senza accavallarsi */
+  .row.header {
+    font-size: 0.56rem;
+    letter-spacing: 0.02em;
+  }
+
+  .rank {
+    font-size: 1rem;
+  }
+
+  .user {
+    font-size: 0.98rem;
   }
 }
